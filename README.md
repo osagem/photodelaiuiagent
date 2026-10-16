@@ -28,6 +28,8 @@ lib/intent.js                   语音意图路由（命令词典 + 待确认态
 lib/voice.js                    语音识别与播报封装（免唤醒连续识别 / 四态相位 / 自听防护）
 lib/format.js                   时间与文案格式化
 pages/index/index.ink           单页智能体全部逻辑与界面（模板 + 脚本 + 样式）
+tools/pack-aix.py               打包规范脚本：打包时注入 agentId（不随包分发）
+tools/README.md                 打包规范说明（agentId 来源 / 两种模式 / 边界与风险）
 ```
 
 ## 依赖
@@ -40,6 +42,20 @@ pages/index/index.ink           单页智能体全部逻辑与界面（模板 + 
 
 ## 构建与安装
 
+**用打包规范脚本**（推荐）—— 它会从仓库外的真源读 agentId 并注入到包内 `VERSION`，然后复核：
+
+```bash
+# 本地安装包（VERSION 注入为 agentId，供归档安装 / 真机联调）
+python photodelaiuiagent/tools/pack-aix.py --mode local
+
+# 发布包（默认同样注入；保留随机 VERSION 加 --keep-random-version）
+python photodelaiuiagent/tools/pack-aix.py --mode release
+```
+
+> 规范全文见 [`tools/README.md`](tools/README.md)。
+
+裸命令等价形式（**不注入 agentId**，包内 `VERSION` 为随机值）：
+
 ```bash
 # 打包
 aix pack ./photodelaiuiagent -o dist/photodelaiuiagent.aix
@@ -48,8 +64,10 @@ aix pack ./photodelaiuiagent -o dist/photodelaiuiagent.aix
 aix install ./photodelaiuiagent -s <serial>
 ```
 
-> 工程内的 `.aix/agent-id` 保存本机智能体 UUID，**不入库**（见 `.gitignore`）：
-> 它决定安装后的 agentId 稳定性，请勿删除本地文件。
+> **为什么 agentId 要走打包注入**：AIUI 两条安装路径的 agentId 来源不同 ——
+> 目录安装复用工程 `.aix/agent-id`，归档安装用**包内 `VERSION`**（`aix pack` 生成的随机 UUID）。
+> 工程内的 `.aix/agent-id` 存本机智能体 UUID，**不入库**（见 `.gitignore`），
+> 它决定安装后的 agentId 稳定性，**请勿删除本地文件**；agentId 的「值」在仓库任何位置都不出现。
 
 ## 设计约束（AIUI v0.18 单色绿）
 
@@ -76,7 +94,7 @@ aix install ./photodelaiuiagent -s <serial>
 > **发布包（`.aix`）内含文件**：`AGENTS.md`（智能体描述层，AIUI OAF 规范要求）、
 > `LICENSE`（AGPL-3.0 全文，分发时随附）、`app.json` / `app.js` / `app.wxss`、
 > `lib/*`、`pages/index/index.ink`，以及打包器自动生成的 `VERSION` 与 `META-INF/aix/manifest.json`。
-> `README.md` / `.gitignore` / `.gitattributes` / `.aixignore` / `.aix/`（本机 agentId）/ `.git/`
-> 属仓库元文件，已由 `.aixignore` 排除，不随安装包分发。
+> `README.md` / `.gitignore` / `.gitattributes` / `.aixignore` / `.aix/`（本机 agentId）/
+> `tools/`（打包脚本）/ `.git/` 属仓库与构建元文件，已由 `.aixignore` 排除，不随安装包分发。
 
 **License:** AGPL-3.0 — see [LICENSE](LICENSE).

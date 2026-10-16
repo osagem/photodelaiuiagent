@@ -11,6 +11,8 @@ dist/
 
 # ---- 依赖 / 编辑器 / 系统 ----
 node_modules/
+__pycache__/
+*.pyc
 .DS_Store
 Thumbs.db
 *.log

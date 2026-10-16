@@ -13,3 +13,6 @@ README.md
 # 版本库内部数据（git init 后 /aix pack 会把 .git/** 一起打进安装包）
 .git
 .git/**
+# 构建工具链不随包分发（tools/pack-aix.py 是打包规范脚本，非运行时代码）
+tools
+tools/**
