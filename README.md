@@ -22,11 +22,21 @@
 ## 演示视频
 
 <p align="center">
-  <video src="docs/agent-demo-01.mp4" poster="docs/agent-demo-01-poster.jpg" controls width="62%"></video>
+  <a href="docs/agent-demo-01.mp4">
+    <img src="docs/agent-demo-01-poster.jpg" width="62%" alt="演示视频（70 秒真机实录）—— 点击播放">
+  </a>
 </p>
 
-70 秒真机实录（眼镜屏幕直录，480×640）：语音唤醒 → 照片浏览 → 视频播放（HEVC 源自动转码）→ 删除与二次确认 → 退出。
-若上方播放器未加载，可[直接打开视频文件](docs/agent-demo-01.mp4)（MP4 / 4.1 MB）。
+<p align="center">
+  <img src="docs/agent-demo-01-preview.gif" width="62%" alt="演示动图：唤醒 → 加载 → 照片浏览 → 视频播放">
+</p>
+
+**▶ [点击封面播放完整视频](docs/agent-demo-01.mp4)**（70 秒 · 480×640 · 4.1 MB）：
+语音唤醒 → 照片浏览 → 视频播放（HEVC 源自动转码）→ 删除与二次确认 → 退出。
+
+> 上方为其中 13 秒的动图预览（唤醒 → 加载 → 浏览 → 视频播放）。
+> GitHub 的 Markdown 不支持内嵌 `<video>` 标签（会被安全策略剥离），故采用"封面 → 视频文件"的呈现方式；
+> 点开后在 GitHub 文件页即可直接播放或下载。
 
 ## 目录结构
 
@@ -41,9 +51,10 @@ lib/intent.js                   语音意图路由（命令词典 + 待确认态
 lib/voice.js                    语音识别与播报封装（免唤醒连续识别 / 四态相位 / 自听防护）
 lib/format.js                   时间与文案格式化
 pages/index/index.ink           单页智能体全部逻辑与界面（模板 + 脚本 + 样式）
-tools/pack-aix.py               打包规范脚本：打包时注入 agentId（不随包分发）
-tools/README.md                 打包规范说明（agentId 来源 / 两种模式 / 边界与风险）
+tools/pack-aix.py               打包 + 自检脚本（不随包分发）
+tools/README.md                 打包与自检规范（agentId 来源 / 条目体检 / 边界）
 docs/agent-demo-01.mp4          演示视频（仓库素材，不随包分发）
+docs/agent-demo-01-preview.gif  演示视频 13 秒动图预览
 docs/agent-demo-01-poster.jpg   演示视频封面帧
 ```
 
@@ -57,19 +68,16 @@ docs/agent-demo-01-poster.jpg   演示视频封面帧
 
 ## 构建与安装
 
-**用打包规范脚本**（推荐）—— 它会从仓库外的真源读 agentId 并注入到包内 `VERSION`，然后复核：
+**用打包 + 自检脚本**（推荐）—— 它跑一次 `aix pack`，再复核包内身份、编译与条目清单：
 
 ```bash
-# 本地安装包（VERSION 注入为 agentId，供归档安装 / 真机联调）
-python photodelaiuiagent/tools/pack-aix.py --mode local
-
-# 发布包（默认同样注入；保留随机 VERSION 加 --keep-random-version）
-python photodelaiuiagent/tools/pack-aix.py --mode release
+python photodelaiuiagent/tools/pack-aix.py            # → dist/photodelaiuiagent.aix
+python photodelaiuiagent/tools/pack-aix.py --dry-run  # 只复核不落盘
 ```
 
 > 规范全文见 [`tools/README.md`](tools/README.md)。
 
-裸命令等价形式（**不注入 agentId**，包内 `VERSION` 为随机值）：
+裸命令等价形式：
 
 ```bash
 # 打包
@@ -79,10 +87,11 @@ aix pack ./photodelaiuiagent -o dist/photodelaiuiagent.aix
 aix install ./photodelaiuiagent -s <serial>
 ```
 
-> **为什么 agentId 要走打包注入**：AIUI 两条安装路径的 agentId 来源不同 ——
-> 目录安装复用工程 `.aix/agent-id`，归档安装用**包内 `VERSION`**（`aix pack` 生成的随机 UUID）。
-> 工程内的 `.aix/agent-id` 存本机智能体 UUID，**不入库**（见 `.gitignore`），
-> 它决定安装后的 agentId 稳定性，**请勿删除本地文件**；agentId 的「值」在仓库任何位置都不出现。
+> **agentId 怎么来的**：`aix pack` 生成的包内 `VERSION` 是一个随机 UUID，
+> 它**就是**该包归档安装（`aix install <包>`）时的 agentId；而目录安装（`aix install <工程目录>`）
+> 复用工程 `.aix/agent-id`（本机身份，**不入库**，见 `.gitignore`，**请勿删除本地文件**）。
+> 两条路径因此是两种身份，属预期现象。**打包流程不注入任何 agentId**，
+> 仓库源码与文档里也不写 id 的值；网页端（AIUI Studio）发布时由云端另行分配，与本节无关。
 
 ## 设计约束（AIUI v0.18 单色绿）
 
