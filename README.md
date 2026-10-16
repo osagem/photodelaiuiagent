@@ -100,6 +100,13 @@ aix install ./photodelaiuiagent -s <serial>
 
 两者都取决于 Rokid 官方 AIUI 的版本能力升级，属预期内的演进方向；届时会以真机实测为准，逐项评估后再决定移除。
 
+### 也可以直接用眼镜端独立 App
+
+如果只是想在眼镜上更快、更直接地查看照片与视频，还有一条更简单的路：使用眼镜端独立 App「**照片删除**」
+—— 装到眼镜上即可使用，**不需要 AIUI 智能体，也不需要桥接服务**，没有任何需要特殊处理的地方。
+
+**▶ [osagem/photoDel4rokidglasses](https://github.com/osagem/photoDel4rokidglasses)** —— Rokid Glasses 上直接查看、删除照片、视频的小工具。
+
 ## 许可证 License
 
 本项目以 **GNU Affero General Public License v3.0（AGPL-3.0）** 发布，与伴生 DCIM 桥
