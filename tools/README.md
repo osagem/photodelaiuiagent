@@ -114,8 +114,9 @@ $PY tools/pack-aix.py --mode local --dry-run           # 只跑流程复核，�
    前后两次构建无法靠 VERSION 区分。**从第二次发布起**建议对 `release` 用 `--keep-random-version`，
    除非你确认云端不依赖它判断新版本。
 3. **云端 agentId 由 Studio 系统生成**（提审表字段说明「Agent ID 系统生成，妥善保留」），
-   本地 agentId 与云端 agentId 从来不是同一个。包内 `VERSION` 是否影响云端分配出的 id —— **未知**，
-   见 §6 待验证第 2 条（这是个便宜且值得做的实验）。
+   本地 agentId 与云端 agentId 从来不是同一个。**已实测：包内 `VERSION` 与云端分配出的 id 无关**
+   （见 §6 第 2 条）⇒ 发布提审前**不必**为了"预定云端 id"去注入 VERSION；
+   注入的意义只在**归档安装落点可控**（以及让本地身份与云端身份对齐）。
 4. **不要随手 `aix install <包>`。** 传包会按包内 VERSION **另生成一条 agentId**，
    设备上会堆同名副本（历史踩过：一度累积 5 条）。日常装机一律 `aix install <工程目录>`。
    —— 而本规范注入 VERSION 的**唯一目的**，正是让"必须传包"的场景（归档/分发）也落在**预期**的 agentId 上。
@@ -125,9 +126,14 @@ $PY tools/pack-aix.py --mode local --dry-run           # 只跑流程复核，�
 ## 6. 待验证清单（真机，尚未执行）
 
 - [ ] `aix install <注入后的包>` 能否成功；装完 `aix device` 显示的 agentId 是否 == 注入值
-- [ ] 上传 Studio 后，页面显示的 **Agent ID** 是否 == 包内 `VERSION`
-      （若相等 → 可在打包阶段**预定**云端 id；若不等 → 只能等云端回填，见项目 `docs/` 的操作单）
+- [x] 上传 Studio 后，页面显示的 **Agent ID** 是否 == 包内 `VERSION` → **否（实测 2026-10-16）**。
+      上传包内 `VERSION` 与云端回填的 agentId 是两个不同的值 ⇒ **云端 id 独立生成、无法在打包阶段预定**，
+      只能等云端回填后再把 id 写回 `.aix/agent-id`（于是"本地身份 = 云端身份"）。
 - [ ] 同一 `VERSION` 的包重复执行手机端「更新眼镜资源包」，是否被判为「无更新」
+
+> **实测记录**（不含 id 值）：发布包上传 Studio 后，云端分配的 agentId 与包内 `VERSION` **不同**。
+> ⇒ 结论：`release` 模式是否注入 VERSION **不影响**云端分配结果；
+> 云端 id 到手后再执行 `python tools/pack-aix.py --mode local --agent-id <云端id>` 完成本地对齐。
 
 ---
 
