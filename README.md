@@ -19,6 +19,15 @@
 - **服务门禁页**：启动时若检测不到本机桥服务，显示全屏引导页（含 APK 下载地址），
   服务就绪后自动进入主界面，无需重新唤醒
 
+## 演示视频
+
+<p align="center">
+  <video src="docs/agent-demo-01.mp4" poster="docs/agent-demo-01-poster.jpg" controls width="62%"></video>
+</p>
+
+70 秒真机实录（眼镜屏幕直录，480×640）：语音唤醒 → 照片浏览 → 视频播放（HEVC 源自动转码）→ 删除与二次确认 → 退出。
+若上方播放器未加载，可[直接打开视频文件](docs/agent-demo-01.mp4)（MP4 / 4.1 MB）。
+
 ## 目录结构
 
 ```
@@ -34,6 +43,8 @@ lib/format.js                   时间与文案格式化
 pages/index/index.ink           单页智能体全部逻辑与界面（模板 + 脚本 + 样式）
 tools/pack-aix.py               打包规范脚本：打包时注入 agentId（不随包分发）
 tools/README.md                 打包规范说明（agentId 来源 / 两种模式 / 边界与风险）
+docs/agent-demo-01.mp4          演示视频（仓库素材，不随包分发）
+docs/agent-demo-01-poster.jpg   演示视频封面帧
 ```
 
 ## 依赖
@@ -98,7 +109,7 @@ aix install ./photodelaiuiagent -s <serial>
 > **发布包（`.aix`）内含文件**：`AGENTS.md`（智能体描述层，AIUI OAF 规范要求）、
 > `LICENSE`（AGPL-3.0 全文，分发时随附）、`app.json` / `app.js` / `app.wxss`、
 > `lib/*`、`pages/index/index.ink`，以及打包器自动生成的 `VERSION` 与 `META-INF/aix/manifest.json`。
-> `README.md` / `.gitignore` / `.gitattributes` / `.aixignore` / `.aix/`（本机 agentId）/
+> `README.md` / `docs/`（演示视频）/ `.gitignore` / `.gitattributes` / `.aixignore` / `.aix/`（本机 agentId）/
 > `tools/`（打包脚本）/ `.git/` 属仓库与构建元文件，已由 `.aixignore` 排除，不随安装包分发。
 
 **License:** AGPL-3.0 — see [LICENSE](LICENSE).

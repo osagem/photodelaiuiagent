@@ -16,3 +16,6 @@ README.md
 # 构建工具链不随包分发（tools/pack-aix.py 是打包规范脚本，非运行时代码）
 tools
 tools/**
+# 仓库素材（README 演示视频与封面，约 4 MB）不随包分发
+docs
+docs/**
