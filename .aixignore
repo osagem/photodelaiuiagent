@@ -4,11 +4,12 @@ node_modules
 .aix
 # 打包产物不得回流：/aix pack 生成的 bundle.aix 曾被当成源文件打进安装包
 *.aix
-# 仓库元文件：只面向 GitHub，不随安装包分发（AGPL 许可证全文见仓库 LICENSE）
+# 仓库元文件：只面向 GitHub，不随安装包分发
 README.md
-LICENSE
 .gitignore
 .gitattributes
+# ★ LICENSE **不排除**：AGPL-3.0 要求分发时随附许可证全文，
+#   故随包分发（发布包内可见 LICENSE，与 AGENTS.md「许可证」一节对应）。
 # 版本库内部数据（git init 后 /aix pack 会把 .git/** 一起打进安装包）
 .git
 .git/**

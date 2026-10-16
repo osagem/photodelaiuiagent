@@ -20,7 +20,8 @@
 ```
 app.json                        智能体元信息（名称、页面、权限、engine 版本）
 app.js / app.wxss               应用入口与全局样式（单色绿设计 token）
-AGENTS.md                       智能体说明与行为约定（开发用系统文档）
+AGENTS.md                       智能体描述层（OAF 规范文件：身份 / 系统指令 / 能力边界），随包分发
+LICENSE                         AGPL-3.0 许可证全文，随包分发
 lib/bridge.js                   DCIM 桥 HTTP 客户端（基址发现 / JSON GET / 结果回读）
 lib/media-store.js              媒体库状态层（清单 / 游标 / 真实删除）
 lib/intent.js                   语音意图路由（命令词典 + 待确认态安全词典）
@@ -60,7 +61,7 @@ aix install ./photodelaiuiagent -s <serial>
 ## 许可证 License
 
 本项目以 **GNU Affero General Public License v3.0（AGPL-3.0）** 发布，与伴生 DCIM 桥
-[photodelaiuibridge](https://github.com/osagem/photodelaibridge) 采用同一协议。
+[photodelaiuibridge](https://github.com/osagem/photodelaiuibridge) 采用同一协议。
 
 - 许可证全文：[LICENSE](LICENSE)
 - 官方页面：https://www.gnu.org/licenses/agpl-3.0.html
@@ -72,7 +73,10 @@ aix install ./photodelaiuiagent -s <serial>
 除 `app.json`（JSON 格式不支持注释）外，所有源码文件头部均带 AGPL-3.0 版权与免责声明，
 并标注 `SPDX-License-Identifier: AGPL-3.0-only`。
 
-> 安装包（`.aix`）内的许可证声明：`LICENSE` / `README.md` 属仓库元文件，已由 `.aixignore` 排除、不随安装包分发
-> （安装包只含运行所需文件）。若将来对外分发 `.aix`，须同时提供 `LICENSE` 全文。
+> **发布包（`.aix`）内含文件**：`AGENTS.md`（智能体描述层，AIUI OAF 规范要求）、
+> `LICENSE`（AGPL-3.0 全文，分发时随附）、`app.json` / `app.js` / `app.wxss`、
+> `lib/*`、`pages/index/index.ink`，以及打包器自动生成的 `VERSION` 与 `META-INF/aix/manifest.json`。
+> `README.md` / `.gitignore` / `.gitattributes` / `.aixignore` / `.aix/`（本机 agentId）/ `.git/`
+> 属仓库元文件，已由 `.aixignore` 排除，不随安装包分发。
 
 **License:** AGPL-3.0 — see [LICENSE](LICENSE).
