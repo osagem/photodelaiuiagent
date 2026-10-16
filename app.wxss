@@ -1,0 +1,63 @@
+/* ============================================================================
+ * 全局样式 —— 对齐 AIUI v0.18「Monochrome-Green Scientific Interface」设计系统
+ * （参考 AIUI 官方设计文档 design/monochrome-green.md）
+ *
+ * 硬件前提：Rokid Glasses 是**单绿透明显示**，只有一个绿色通道。
+ *   → 只允许一个色相（#40ff5e）；层级靠「亮度档 / 线宽 / 留白」表达，
+ *     绝不用第二色相（红色在单绿面板上只能被渲染成更暗的绿，无法表达"危险"）。
+ *   → 语义状态必须冗余编码：文字标签 + 图形/线型（虚线、边框粗细）。
+ *
+ * 尺寸：参考画布 480×352，安全内边距 16px(横) / 12px(纵)。
+ * 本工程用 480×380 的叠放式全屏媒体层，留白与线宽遵循同一套 token。
+ *
+ * token 定义放在 page 上，子元素通过 CSS 自定义属性继承；
+ * 引用一律带 fallback（var(--x, 兜底值)）——运行时若未解析自定义属性也不会掉色。
+ * ========================================================================= */
+
+page {
+  width: 100%;
+  min-height: 120px;
+  /* ★ 画布高度按官方实测容器对齐：AIUI 全屏视口 480×352
+     （真机日志 container_layout=480x352 / resolved_viewport=480x352，
+      与设计系统 §4「Reference size: 480 × 352 px」一致）。
+      旧值 380 来自已过时的"高 120–380px"口径，比容器高 28px。 */
+  max-height: 352px;
+  background-color: #000000;
+
+  /* ---- 亮度阶（设计系统 colors.primary-*）---- */
+  --color-primary: #40ff5e;
+  --color-primary-72: rgba(64, 255, 94, 0.72);
+  --color-primary-48: rgba(64, 255, 94, 0.48);
+  --color-primary-24: rgba(64, 255, 94, 0.24);
+  --color-primary-12: rgba(64, 255, 94, 0.12);
+  --color-primary-06: rgba(64, 255, 94, 0.06);
+
+  /* ---- 语义角色（设计系统 ink / line / surface）---- */
+  --color-ink: var(--color-primary);
+  --color-ink-primary: var(--color-primary-72);
+  --color-ink-secondary: var(--color-primary-48);
+  --color-ink-disabled: var(--color-primary-24);
+  --color-line-strong: var(--color-primary-72);
+  --color-line-default: var(--color-primary-48);
+  --color-line-muted: var(--color-primary-24);
+  --color-surface-active: var(--color-primary-12);
+  --color-surface-subtle: var(--color-primary-06);
+
+  /* ---- 底衬遮罩（压在媒体上的文字必须靠它保证对比度，§1.3）----
+     数字是黑的不透明度：50 = 半透明（用户 2026-10-16 定稿，原为 100 纯黑）。 */
+  --color-scrim-50: rgba(0, 0, 0, 0.5);
+
+  /* ---- 线宽 / 圆角 / 间距（设计系统 border-width / rounded / spacing）---- */
+  --border-hairline: 1px;
+  --border-strong: 2px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+
+  color: var(--color-ink-primary, rgba(64, 255, 94, 0.72));
+  font-family: sans-serif;
+}

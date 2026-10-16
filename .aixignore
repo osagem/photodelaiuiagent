@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+node_modules
+.aix
+# 打包产物不得回流：/aix pack 生成的 bundle.aix 曾被当成源文件打进安装包
+*.aix

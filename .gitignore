@@ -1,0 +1,18 @@
+# ---- 敏感：智能体身份标识（本机 agentId）----
+# 工程内的 .aix/agent-id 存有本机安装的智能体 UUID，属于个人身份信息，绝不入库。
+# ★ 不要删除本地文件：`aix install` 依赖它保持 agentId 不变（用户硬要求）。
+#   备份见工程外的 _sensitive-out/agent-id.bak
+.aix/
+agent-id
+
+# ---- AIUI 打包产物（与 .aixignore 一致：打包产物不得回流）----
+*.aix
+dist/
+
+# ---- 依赖 / 编辑器 / 系统 ----
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
