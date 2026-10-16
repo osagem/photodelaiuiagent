@@ -4,7 +4,11 @@
 
 > 这是**AIUI 智能体（Ink）端**源码。它本身没有系统相册读写能力 —— 所有相册访问都经由
 > 本机回环 HTTP 桥 **照片删除智能体服务**（DCIM Bridge，独立侧载 App）完成。
-> 桥的源码与安装包：https://github.com/osagem/photodelaiuibridge
+> 桥的源码与签名安装包：[**osagem/photodelaiuibridge**](https://github.com/osagem/photodelaiuibridge)
+> （AGPL-3.0）。**智能体需先装桥并授权「所有文件访问」才可用**，安装步骤见该仓库 README。
+>
+> 安装智能体本身：见本仓库 [Releases](https://github.com/osagem/photodelaiuiagent/releases)
+> （`.aix` 包，经 AIUI Studio 上传 / 真机调试下发）。
 
 ## 功能
 
