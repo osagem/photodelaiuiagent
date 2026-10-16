@@ -56,3 +56,23 @@ aix install ./photodelaiuiagent -s <serial>
   层级靠亮度档（100 / 72 / 48 / 24 / 12 / 6%）、线宽与留白表达。
 - 画布 **480×352**，安全内边距 16px（横）/ 12px（纵）。
 - 语义状态**冗余编码**（文字标签 + 线型），颜色不单独承担语义。
+
+## 许可证 License
+
+本项目以 **GNU Affero General Public License v3.0（AGPL-3.0）** 发布，与伴生 DCIM 桥
+[photodelaiuibridge](https://github.com/osagem/photodelaibridge) 采用同一协议。
+
+- 许可证全文：[LICENSE](LICENSE)
+- 官方页面：https://www.gnu.org/licenses/agpl-3.0.html
+- 中文参考译文：https://www.gnu.org/licenses/agpl-3.0.zh-cn.html
+
+> AGPL-3.0 是强著佐权（copyleft）许可：分发本软件、分发其修改版，或以网络服务形式向用户提供本软件时，
+> 都必须以 AGPL-3.0 开放相应源代码。若需在闭源项目中使用，请先联系作者获取另行授权。
+
+除 `app.json`（JSON 格式不支持注释）外，所有源码文件头部均带 AGPL-3.0 版权与免责声明，
+并标注 `SPDX-License-Identifier: AGPL-3.0-only`。
+
+> 安装包（`.aix`）内的许可证声明：`LICENSE` / `README.md` 属仓库元文件，已由 `.aixignore` 排除、不随安装包分发
+> （安装包只含运行所需文件）。若将来对外分发 `.aix`，须同时提供 `LICENSE` 全文。
+
+**License:** AGPL-3.0 — see [LICENSE](LICENSE).

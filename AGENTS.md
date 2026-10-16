@@ -122,3 +122,10 @@
 - 页面实现 `onTargetChanged`（_current/_blank），变化写桥日志取证。
   转码产物为 720p 级 H.264 High + AAC-LC 直通、moov 前置，缓存于 `/sdcard/.dcimbridge/transcode/`（1GB LRU）。
   删除视频会联动清掉其转码缓存；probe 不可用时重试 3 次，仍不通显示「媒体服务暂不可用」，**绝不把 HEVC 原片直接喂播放器**。
+
+## 许可证
+
+本项目以 **GNU Affero General Public License v3.0（AGPL-3.0）** 发布，全文见仓库根目录 [LICENSE](LICENSE)。
+Copyright (C) 2026 OSAGEM。任何分发（含以网络服务形式提供）均须以 AGPL-3.0 开放相应源代码。
+
+> 注：本文件中的交互语义描述停留在 v1.5.4，落后于当前实现（v1.6.3），待整体校正。
