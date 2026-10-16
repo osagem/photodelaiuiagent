@@ -96,7 +96,10 @@ def persist_agent_id(agent_id: str, current: str | None) -> bool:
     if current == agent_id:
         return False
     ID_FILE.parent.mkdir(parents=True, exist_ok=True)
-    ID_FILE.write_text(agent_id + "\n", encoding="utf-8")
+    # ★ 必须 newline="" —— 否则 Windows 上 write_text 会把 \n 转成 \r\n，
+    #   让身份文件带 ^M（机器读为主的文件，行尾应恒为 LF）。
+    with ID_FILE.open("w", encoding="utf-8", newline="") as fh:
+        fh.write(agent_id + "\n")
     return True
 
 
